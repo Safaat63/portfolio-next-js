@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio CMS Admin Dashboard
+
+A complete full-stack admin dashboard for managing your portfolio website built with **Next.js 16**, **Prisma 7**, **Neon PostgreSQL**, and **TailwindCSS 4**.
 
 ## Getting Started
 

@@ -1,65 +1,127 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+
+type Profile = {
+  id: number;
+  name: string;
+  title: string;
+  bio: string;
+  avatar?: string;
+};
 
 export default function Home() {
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        const res = await fetch("/api/profile");
+        if (res.ok) {
+          const data = await res.json();
+          setProfile(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch profile");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProfile();
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <main>
+      {/* Hero Section */}
+      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 to-indigo-900 text-white">
+        <div className="container mx-auto px-6 py-16 text-center">
+          {loading ? (
+            <p>Loading profile...</p>
+          ) : profile ? (
+            <>
+              {profile.avatar && (
+                <img
+                  src={profile.avatar}
+                  alt={profile.name}
+                  className="w-24 h-24 rounded-full mx-auto mb-6 border-4 border-white"
+                />
+              )}
+              <h1 className="text-5xl md:text-7xl font-bold mb-4">
+                {profile.name}
+              </h1>
+              <p className="text-2xl md:text-3xl text-blue-100 mb-8">
+                {profile.title}
+              </p>
+              <p className="text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                {profile.bio}
+              </p>
+            </>
+          ) : (
+            <>
+              <h1 className="text-5xl md:text-7xl font-bold mb-4">
+                Welcome to My Portfolio
+              </h1>
+              <p className="text-2xl text-blue-100 mb-8">
+                Full-Stack Developer & Designer
+              </p>
+              <p className="text-lg max-w-2xl mx-auto mb-8">
+                Crafting beautiful, functional digital experiences
+              </p>
+            </>
+          )}
+
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Link
+              href="/projects"
+              className="bg-white text-indigo-900 font-semibold px-8 py-3 rounded-lg hover:bg-blue-100 transition"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              View My Work
+            </Link>
+            <Link
+              href="/contact"
+              className="border-2 border-white text-white font-semibold px-8 py-3 rounded-lg hover:bg-white hover:text-indigo-900 transition"
             >
-              Learning
-            </a>{" "}
-            center.
+              Get in Touch
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Projects Preview */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-6">
+          <h2 className="text-4xl font-bold mb-4 text-center text-indigo-600">Featured Work</h2>
+          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+            A selection of my recent projects showcasing my skills and expertise
           </p>
+          <div className="text-center">
+            <Link
+              href="/projects"
+              className="inline-block bg-indigo-600 text-white font-semibold px-8 py-3 rounded-lg hover:bg-indigo-700 transition"
+            >
+              Explore All Projects →
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-16 bg-gradient-to-r from-indigo-600 to-blue-600 text-white">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-4xl font-bold mb-4">Ready to Start a Project?</h2>
+          <p className="text-lg mb-8 max-w-2xl mx-auto">
+            Let's collaborate and bring your ideas to life. Feel free to reach out anytime.
+          </p>
+          <Link
+            href="/contact"
+            className="inline-block bg-white text-indigo-600 font-semibold px-8 py-3 rounded-lg hover:bg-gray-100 transition"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            Contact Me
+          </Link>
         </div>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
