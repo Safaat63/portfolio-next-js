@@ -1,14 +1,21 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+interface Params {
+  params: Promise<{
+    id: string;
+  }>;
+}
+
 // --- Update project ---
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, { params }: Params) {
   try {
+    const { id } = await params;
     const body = await req.json();
     const updated = await prisma.project.update({
-      where: { id: Number(params.id) },
+      where: { id: Number(id) },
       data: {
         title: body.title,
         description: body.description,
@@ -25,10 +32,11 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 }
 
 // --- Delete project ---
-export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(_req: NextRequest, { params }: Params) {
   try {
+    const { id } = await params;
     await prisma.project.delete({
-      where: { id: Number(params.id) },
+      where: { id: Number(id) },
     });
     return NextResponse.json({ message: "Project deleted" });
   } catch (error) {

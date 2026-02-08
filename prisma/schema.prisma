@@ -14,41 +14,45 @@ generator client {
 }
 
 model Profile {
-  id        Int      @id @default(autoincrement())
-  name      String
-  title     String
-  bio       String   @db.Text
-  github    String?
-  linkedin  String?
-  email     String?
-  image     String?
-  updatedAt DateTime @updatedAt
+  id            Int      @id @default(autoincrement())
+  name          String
+  title         String
+  bio           String   @db.Text
+  github        String?
+  linkedin      String?
+  email         String?
+  image         String?
+  profileImages String[] // Array of profile image URLs
+  updatedAt     DateTime @updatedAt
 }
 
 model Project {
-  id          Int      @id @default(autoincrement())
+  id          Int            @id @default(autoincrement())
   title       String
   description String
   tech        String[]
   image       String?
+  images      ProjectImage[]
   github      String?
   demo        String?
 }
 
 model Work {
-  id          Int    @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   company     String
   role        String
   duration    String
   description String
+  workImages  WorkImage[]
 }
 
 model Admin {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                  Int                  @id @default(autoincrement())
+  username            String               @unique
+  password            String
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  passwordResetTokens PasswordResetToken[]
 }
 
 model About {
@@ -64,4 +68,100 @@ model Contact {
   phone     String?
   address   String?
   updatedAt DateTime @updatedAt
+}
+
+// Messaging System
+model Message {
+  id             Int          @id @default(autoincrement())
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  conversationId Int
+  senderName     String
+  senderEmail    String
+  senderPhone    String?
+  content        String       @db.Text
+  contactMethod  String // "email", "whatsapp", "linkedin"
+  attachments    Attachment[]
+  isRead         Boolean      @default(false)
+  hasReply       Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model Conversation {
+  id                   Int                @id @default(autoincrement())
+  subject              String?
+  messages             Message[]
+  senderEmail          String
+  isActive             Boolean            @default(true)
+  autoReplyTemplateId  Int?
+  autoReplyTemplate    AutoReplyTemplate? @relation(fields: [autoReplyTemplateId], references: [id])
+  notificationsEnabled Boolean            @default(true)
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  expiresAt            DateTime? // For message retention
+}
+
+model Attachment {
+  id        Int      @id @default(autoincrement())
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  messageId Int
+  fileName  String
+  fileUrl   String
+  fileType  String
+  fileSize  Int
+  createdAt DateTime @default(now())
+}
+
+model AutoReplyTemplate {
+  id            Int            @id @default(autoincrement())
+  name          String
+  subject       String
+  message       String         @db.Text
+  isActive      Boolean        @default(true)
+  conversations Conversation[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model MessageSettings {
+  id                    Int      @id @default(autoincrement())
+  autoReplyEnabled      Boolean  @default(false)
+  messageRetentionDays  Int      @default(30)
+  notificationsEnabled  Boolean  @default(true)
+  emailNotifications    Boolean  @default(true)
+  whatsappNotifications Boolean  @default(false)
+  linkedinNotifications Boolean  @default(false)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+// File uploads for projects and work
+model ProjectImage {
+  id           Int      @id @default(autoincrement())
+  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId    Int
+  imageUrl     String
+  description  String?
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+}
+
+model WorkImage {
+  id           Int      @id @default(autoincrement())
+  work         Work     @relation(fields: [workId], references: [id], onDelete: Cascade)
+  workId       Int
+  imageUrl     String
+  description  String?
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+}
+
+// Password reset tokens
+model PasswordResetToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  adminId   Int
+  admin     Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }

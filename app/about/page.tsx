@@ -8,10 +8,88 @@ type About = {
     content: string;
 };
 
+const styles = {
+    main: {
+        backgroundColor: "#ffffff",
+        minHeight: "100vh",
+    },
+    container: {
+        maxWidth: "1280px",
+        margin: "0 auto",
+        padding: "1.5rem",
+    },
+    containerLg: {
+        padding: "4rem 5rem",
+    },
+    loadingContainer: {
+        textAlign: "center" as const,
+        padding: "4rem 1.5rem",
+    },
+    loadingText: {
+        color: "#4b5563",
+    },
+    errorBox: {
+        backgroundColor: "#fee2e2",
+        color: "#dc2626",
+        padding: "1rem",
+        borderRadius: "0.5rem",
+        marginBottom: "2rem",
+    },
+    emptyState: {
+        textAlign: "center" as const,
+        padding: "4rem 1.5rem",
+    },
+    emptyTitle: {
+        fontSize: "2.25rem",
+        fontWeight: "700",
+        marginBottom: "1rem",
+    },
+    emptyText: {
+        color: "#6b7280",
+        marginBottom: "1rem",
+    },
+    emptyBox: {
+        backgroundColor: "#f0fdfa",
+        padding: "1.5rem",
+        borderRadius: "0.5rem",
+        maxWidth: "32rem",
+        margin: "0 auto",
+    },
+    emptyBoxText: {
+        fontSize: "0.875rem",
+        color: "#4b5563",
+    },
+    contentContainer: {
+        maxWidth: "48rem",
+        margin: "0 auto",
+    },
+    title: {
+        fontSize: "2.25rem",
+        fontWeight: "700",
+        marginBottom: "2rem",
+        textAlign: "center" as const,
+    },
+    contentText: {
+        color: "#374151",
+        lineHeight: "1.75",
+        fontSize: "1rem",
+    },
+};
+
 export default function AboutPage() {
     const [about, setAbout] = useState<About | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [isMd, setIsMd] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMd(window.innerWidth >= 768);
+        };
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     useEffect(() => {
         async function fetchAbout() {
@@ -31,40 +109,42 @@ export default function AboutPage() {
 
     if (loading)
         return (
-            <div className="container mx-auto px-6 py-16 text-center">
-                <p className="text-gray-600">Loading...</p>
-            </div>
+            <main style={styles.main}>
+                <div style={{ ...styles.container, ...styles.loadingContainer }}>
+                    <p style={styles.loadingText}>Loading...</p>
+                </div>
+            </main>
         );
 
     return (
-        <div className="container mx-auto px-6 py-16">
-            {error && (
-                <div className="bg-red-100 text-red-700 p-4 rounded mb-8">{error}</div>
-            )}
+        <main style={styles.main}>
+            <div style={{ ...styles.container, ...(isMd && styles.containerLg) }}>
+                {error && (
+                    <div style={styles.errorBox}>{error}</div>
+                )}
 
-            {!about ? (
-                <div className="text-center py-16">
-                    <h1 className="text-4xl font-bold mb-4">About Me</h1>
-                    <p className="text-gray-500 mb-4">
-                        No about page content yet. (Set it up in the admin dashboard)
-                    </p>
-                    <div className="bg-blue-50 p-6 rounded-lg max-w-2xl mx-auto">
-                        <p className="text-sm text-gray-600">
-                            Go to Admin Dashboard → About tab to add your about page content
+                {!about ? (
+                    <div style={styles.emptyState}>
+                        <h1 style={styles.emptyTitle}>About Me</h1>
+                        <p style={styles.emptyText}>
+                            No about page content yet. (Set it up in the admin dashboard)
                         </p>
+                        <div style={styles.emptyBox}>
+                            <p style={styles.emptyBoxText}>
+                                Go to Admin Dashboard → About tab to add your about page content
+                            </p>
+                        </div>
                     </div>
-                </div>
-            ) : (
-                <div className="max-w-3xl mx-auto">
-                    <h1 className="text-4xl font-bold mb-8 text-center">{about.title}</h1>
-                    <div className="prose prose-lg max-w-none">
+                ) : (
+                    <div style={styles.contentContainer}>
+                        <h1 style={styles.title}>{about.title}</h1>
                         <div
-                            className="text-gray-700 leading-relaxed"
+                            style={styles.contentText}
                             dangerouslySetInnerHTML={{ __html: about.content }}
                         />
                     </div>
-                </div>
-            )}
-        </div>
+                )}
+            </div>
+        </main>
     );
 }
