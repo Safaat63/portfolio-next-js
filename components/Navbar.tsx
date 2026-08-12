@@ -1,368 +1,112 @@
 "use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, ArrowRight, Hexagon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const styles = {
-  nav: {
-    position: "sticky" as const,
-    top: 0,
-    zIndex: 50,
-    backgroundColor: "white",
-    borderBottom: "1px solid #e2e8f0",
-    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.05)",
-  },
-  container: {
-    maxWidth: "1280px",
-    margin: "0 auto",
-    padding: "0 1.5rem",
-    paddingTop: "1rem",
-    paddingBottom: "1rem",
-  },
-  flexBetween: {
-    display: "flex" as const,
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  logo: {
-    fontSize: "1.5rem",
-    fontWeight: "900",
-    letterSpacing: "-0.05em",
-    color: "#0d9488",
-    textDecoration: "none",
-    transition: "color 0.3s ease",
-    display: "flex",
-    alignItems: "center",
-    gap: "0.5rem",
-  },
-  logoBadge: {
-    width: "2rem",
-    height: "2rem",
-    background: "linear-gradient(to bottom right, #0d9488, #06b6d4)",
-    borderRadius: "0.5rem",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "white",
-    fontWeight: "700",
-    fontSize: "0.75rem",
-  },
-  desktopMenu: {
-    display: "none",
-  },
-  desktopMenuShow: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.25rem",
-  },
-  menuItem: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.5rem",
-    padding: "0.5rem 1rem",
-    borderRadius: "0.5rem",
-    fontWeight: "500",
-    transition: "all 0.3s ease",
-    textDecoration: "none",
-    color: "#4b5563",
-    cursor: "pointer",
-  },
-  menuItemActive: {
-    backgroundColor: "#f0fdfa",
-    color: "#0d9488",
-  },
-  rightSide: {
-    display: "flex",
-    alignItems: "center",
-    gap: "1rem",
-  },
-  adminButton: {
-    display: "none",
-    padding: "0.5rem 1.25rem",
-    background: "linear-gradient(to right, #0d9488, #06b6d4)",
-    color: "white",
-    fontWeight: "600",
-    borderRadius: "0.5rem",
-    textDecoration: "none",
-    transition: "all 0.3s ease",
-    border: "none",
-    cursor: "pointer",
-    fontSize: "0.9rem",
-  },
-  adminButtonShow: {
-    display: "inline-block",
-  },
-  hamburger: {
-    display: "flex" as const,
-    flexDirection: "column" as const,
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "0.375rem",
-    width: "2.5rem",
-    height: "2.5rem",
-    background: "none",
-    border: "none",
-    cursor: "pointer",
-    padding: 0,
-  },
-  hamburgerHide: {
-    display: "none",
-  },
-  hamburgerLine: {
-    width: "1.5rem",
-    height: "2px",
-    backgroundColor: "#374151",
-    transition: "all 0.3s ease",
-  },
-  mobileMenu: {
-    display: "none",
-  },
-  mobileMenuShow: {
-    display: "flex",
-    marginTop: "1rem",
-    paddingBottom: "1rem",
-    borderTop: "1px solid #e2e8f0",
-    paddingTop: "1rem",
-  },
-  mobileMenuContainer: {
-    display: "flex",
-    flexDirection: "column" as const,
-    gap: "0.5rem",
-    width: "100%",
-  },
-  mobileMenuItem: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.75rem",
-    padding: "0.75rem 1rem",
-    borderRadius: "0.5rem",
-    fontWeight: "500",
-    transition: "all 0.3s ease",
-    textDecoration: "none",
-    color: "#4b5563",
-  },
-  mobileMenuItemActive: {
-    background: "linear-gradient(to right, #f0fdfa, #cffafe)",
-    color: "#0d9488",
-    borderLeft: "4px solid #0d9488",
-    paddingLeft: "calc(1rem - 4px)",
-  },
-  mobileAdminButton: {
-    display: "flex",
-    alignItems: "center",
-    gap: "0.75rem",
-    padding: "0.75rem 1rem",
-    borderRadius: "0.5rem",
-    fontWeight: "600",
-    color: "white",
-    background: "linear-gradient(to right, #0d9488, #06b6d4)",
-    textDecoration: "none",
-    transition: "all 0.3s ease",
-    marginTop: "0.5rem",
-    border: "none",
-    cursor: "pointer",
-    fontSize: "0.9rem",
-  },
-};
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
+  { href: "/contact", label: "Contact" },
+];
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+export function Navbar() {
   const pathname = usePathname();
-  const [isLarge, setIsLarge] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsLarge(window.innerWidth >= 768);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const menuItems = [
-    { label: "Home", href: "/", icon: "🏠" },
-    { label: "About", href: "/about", icon: "👤" },
-    { label: "Projects", href: "/projects", icon: "💼" },
-    { label: "Work", href: "/work", icon: "✨" },
-    { label: "Contact", href: "/contact", icon: "📧" },
-  ];
-
-  const isActive = (href: string) => pathname === href;
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <nav style={styles.nav}>
-      <div style={styles.container}>
-        <div style={styles.flexBetween}>
-          {/* Logo */}
+    <header className="fixed inset-x-0 top-0 z-50">
+      <nav className="glass mx-auto mt-4 flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:mx-6 sm:px-6 lg:mx-auto">
+        <Link href="/" className="group flex items-center gap-2.5" onClick={() => setMobileOpen(false)}>
+          <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-teal-400 to-sky-500 text-slate-950 shadow-lg shadow-teal-500/30 transition-transform duration-300 group-hover:rotate-6">
+            <Hexagon className="h-5 w-5" />
+          </span>
+          <span className="font-mono text-sm font-bold tracking-tight text-white">
+            Miftah<span className="text-teal-300">Coding</span>
+          </span>
+        </Link>
+
+        <div className="hidden items-center gap-1 md:flex">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={cn(
+                "relative rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200",
+                isActive(link.href) ? "text-white" : "text-slate-400 hover:text-white"
+              )}
+            >
+              {isActive(link.href) && (
+                <motion.span
+                  layoutId="nav-active"
+                  className="absolute inset-0 rounded-lg border border-teal-400/40 bg-teal-400/10"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10">{link.label}</span>
+            </Link>
+          ))}
           <Link
-            href="/"
-            style={styles.logo}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#09725f")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "#0d9488")}
+            href="/contact"
+            className="btn-primary ml-2 hidden !py-2 md:inline-flex"
           >
-            <span style={styles.logoBadge}>S</span>
-            Safaat
+            Hire Me
+            <ArrowRight className="h-4 w-4" />
           </Link>
-
-          {/* Desktop Menu */}
-          <div style={{ ...styles.desktopMenu, ...(isLarge && styles.desktopMenuShow) }}>
-            {menuItems.map((item) => {
-              const active = isActive(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  style={{
-                    ...styles.menuItem,
-                    ...(active && styles.menuItemActive),
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!active) {
-                      e.currentTarget.style.backgroundColor = "#f1f5f9";
-                      e.currentTarget.style.color = "#0d9488";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!active) {
-                      e.currentTarget.style.backgroundColor = "transparent";
-                      e.currentTarget.style.color = "#4b5563";
-                    }
-                  }}
-                >
-                  <span style={{ fontSize: "1.125rem" }}>{item.icon}</span>
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Right Side */}
-          <div style={styles.rightSide}>
-            {/* Desktop Admin Button */}
-            <Link
-              href="/admin"
-              style={{ ...styles.adminButton, ...(isLarge && styles.adminButtonShow) }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = "0 10px 15px rgba(0, 0, 0, 0.1)";
-                e.currentTarget.style.transform = "scale(1.05)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = "none";
-                e.currentTarget.style.transform = "scale(1)";
-              }}
-            >
-              Admin
-            </Link>
-
-            {/* Mobile Hamburger */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              style={{ ...styles.hamburger, ...(isLarge && styles.hamburgerHide) }}
-              aria-label="Toggle menu"
-            >
-              <span
-                style={{
-                  ...styles.hamburgerLine,
-                  transform: isOpen ? "rotate(45deg) translateY(10px)" : "none",
-                  backgroundColor: isOpen ? "#0d9488" : "#374151",
-                }}
-              ></span>
-              <span
-                style={{
-                  ...styles.hamburgerLine,
-                  opacity: isOpen ? 0 : 1,
-                  backgroundColor: isOpen ? "#0d9488" : "#374151",
-                }}
-              ></span>
-              <span
-                style={{
-                  ...styles.hamburgerLine,
-                  transform: isOpen ? "rotate(-45deg) translateY(-10px)" : "none",
-                  backgroundColor: isOpen ? "#0d9488" : "#374151",
-                }}
-              ></span>
-            </button>
-          </div>
         </div>
 
-        {/* Mobile Menu */}
-        <div style={{ ...styles.mobileMenu, ...(isOpen && styles.mobileMenuShow) }}>
-          <div style={styles.mobileMenuContainer}>
-            {menuItems.map((item) => {
-              const active = isActive(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  style={{
-                    ...styles.mobileMenuItem,
-                    ...(active && styles.mobileMenuItemActive),
-                    // make sure you only use either padding OR paddingTop/paddingRight/paddingBottom/paddingLeft
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!active) {
-                      e.currentTarget.style.backgroundColor = "#f1f5f9";
-                      e.currentTarget.style.color = "#0d9488";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!active) {
-                      e.currentTarget.style.backgroundColor = "transparent";
-                      e.currentTarget.style.color = "#4b5563";
-                    }
-                  }}
-                >
-                  <span style={{ fontSize: "1.25rem" }}>{item.icon}</span>
-                  <span>{item.label}</span>
-                </Link>
+        <button
+          type="button"
+          className="rounded-lg border border-white/10 bg-white/5 p-2 text-slate-200 transition-colors hover:border-teal-400/50 md:hidden"
+          onClick={() => setMobileOpen((v) => !v)}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+        >
+          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+      </nav>
 
-
-
-                // <Link
-                //   key={item.href}
-                //   href={item.href}
-                //   onClick={() => setIsOpen(false)}
-                //   style={{
-                //     ...styles.mobileMenuItem,
-                //     ...(active && styles.mobileMenuItemActive),
-                //   }}
-                //   onMouseEnter={(e) => {
-                //     if (!active) {
-                //       e.currentTarget.style.backgroundColor = "#f1f5f9";
-                //       e.currentTarget.style.color = "#0d9488";
-                //     }
-                //   }}
-                //   onMouseLeave={(e) => {
-                //     if (!active) {
-                //       e.currentTarget.style.backgroundColor = "transparent";
-                //       e.currentTarget.style.color = "#4b5563";
-                //     }
-                //   }}
-                // >
-                //   <span style={{ fontSize: "1.25rem" }}>{item.icon}</span>
-                //   <span>{item.label}</span>
-                // </Link>
-              );
-            })}
-            {/* Mobile Admin Button */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.2 }}
+            className="glass-strong mx-4 mt-2 flex flex-col gap-1 p-3 md:hidden"
+          >
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  "rounded-lg px-4 py-3 text-sm font-medium transition-colors",
+                  isActive(link.href)
+                    ? "border border-teal-400/40 bg-teal-400/10 text-white"
+                    : "text-slate-400 hover:bg-white/5 hover:text-white"
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
             <Link
-              href="/admin"
-              onClick={() => setIsOpen(false)}
-              style={styles.mobileAdminButton}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = "0 10px 15px rgba(0, 0, 0, 0.1)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = "none";
-              }}
+              href="/contact"
+              onClick={() => setMobileOpen(false)}
+              className="btn-primary mt-2"
             >
-              <span style={{ fontSize: "1.125rem" }}>⚙️</span>
-              <span>Admin Panel</span>
+              Hire Me
+              <ArrowRight className="h-4 w-4" />
             </Link>
-          </div>
-        </div>
-      </div>
-    </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 }

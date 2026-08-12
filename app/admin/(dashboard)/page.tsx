@@ -1,479 +1,99 @@
-"use client";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { FolderKanban, FileText, Inbox, ArrowRight } from "lucide-react";
+import { GlassCard } from "@/components/ui/GlassCard";
+import { sql } from "@/lib/db";
 
-import { useState, useEffect } from "react";
-import {
-  FiMenu,
-  FiX,
-  FiLogOut,
-  FiMessageSquare,
-  FiSettings,
-  FiImage,
-  FiFileText,
-  FiBriefcase,
-  FiBook,
-  FiMail,
-} from "react-icons/fi";
-import AdminMessaging from "@/components/AdminMessaging";
-import AdminSettings from "@/components/AdminSettings";
-import ProfileImageUpload from "@/components/ProfileImageUpload";
-import AdminAbout from "@/components/AdminAbout";
-import AdminProjects from "@/components/AdminProjects";
-import AdminWork from "@/components/AdminWork";
-import AdminContact from "@/components/AdminContact";
+export const dynamic = "force-dynamic";
 
-type AdminTab =
-  | "messages"
-  | "about"
-  | "projects"
-  | "work"
-  | "contact"
-  | "profile"
-  | "settings";
-
-const styles = {
-  container: {
-    display: "flex" as const,
-    height: "100vh",
-    backgroundColor: "#f8fafc",
-  },
-  sidebar: {
-    backgroundColor: "#ffffff",
-    borderRight: "1px solid #e2e8f0",
-    transition: "all 0.3s ease",
-    display: "flex" as const,
-    flexDirection: "column" as const,
-    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.05)",
-  },
-  sidebarOpen: {
-    width: "16rem",
-  },
-  sidebarClosed: {
-    width: "5rem",
-  },
-  sidebarHeader: {
-    padding: "1rem",
-    borderBottom: "1px solid #e2e8f0",
-    display: "flex" as const,
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  sidebarTitle: {
-    fontWeight: "700",
-    fontSize: "1.25rem",
-    color: "#0d9488",
-  },
-  sidebarToggle: {
-    padding: "0.5rem",
-    hover: "#f1f5f9",
-    borderRadius: "0.5rem",
-    transition: "background-color 0.3s ease",
-    color: "#4b5563",
-    cursor: "pointer",
-    border: "none",
-    backgroundColor: "transparent",
-  },
-  statsContainer: {
-    padding: "1rem",
-    display: "flex" as const,
-    flexDirection: "column" as const,
-    gap: "0.75rem",
-    borderBottom: "1px solid #e2e8f0",
-  },
-  statBox: {
-    backgroundImage: "linear-gradient(to bottom right, #f0fdfa, #a7f3d0)",
-    borderRadius: "0.5rem",
-    padding: "1rem",
-    border: "1px solid #99f6e4",
-  },
-  statLabel: {
-    fontSize: "0.75rem",
-    fontWeight: "600",
-    color: "#4b5563",
-    marginBottom: "0.25rem",
-  },
-  statValue: {
-    fontSize: "1.5rem",
-    fontWeight: "700",
-    color: "#0d9488",
-  },
-  navbar: {
-    flex: 1,
-    padding: "1rem",
-    display: "flex" as const,
-    flexDirection: "column" as const,
-    gap: "0.5rem",
-    overflowY: "auto" as const,
-  },
-  menuButton: {
-    width: "100%",
-    display: "flex" as const,
-    alignItems: "center",
-    gap: "0.75rem",
-    padding: "0.75rem 1rem",
-    borderRadius: "0.5rem",
-    transition: "all 0.3s ease",
-    fontWeight: "600",
-    border: "none",
-    cursor: "pointer",
-    fontSize: "1rem",
-  },
-  menuButtonActive: {
-    backgroundColor: "#0d9488",
-    color: "white",
-    boxShadow: "0 3px 10px rgba(13, 148, 136, 0.2)",
-  },
-  menuButtonInactive: {
-    color: "#374151",
-    backgroundColor: "transparent",
-  },
-  logoutButton: {
-    margin: "1rem",
-    display: "flex" as const,
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "0.5rem",
-    padding: "0.75rem 1rem",
-    borderRadius: "0.5rem",
-    backgroundColor: "#fee2e2",
-    color: "#dc2626",
-    transition: "background-color 0.3s ease",
-    fontWeight: "600",
-    border: "1px solid #fecaca",
-    cursor: "pointer",
-  },
-  mainContent: {
-    flex: 1,
-    display: "flex" as const,
-    flexDirection: "column" as const,
-    overflowY: "auto" as const,
-  },
-  header: {
-    backgroundColor: "#ffffff",
-    borderBottom: "1px solid #e2e8f0",
-    padding: "1.5rem 2rem",
-    display: "flex" as const,
-    justifyContent: "space-between",
-    alignItems: "center",
-    position: "sticky" as const,
-    top: 0,
-    zIndex: 10,
-    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.05)",
-  },
-  headerTitle: {
-    fontSize: "1.5rem",
-    fontWeight: "700",
-    color: "#111827",
-  },
-  headerSubtitle: {
-    fontSize: "0.875rem",
-    color: "#6b7280",
-    marginTop: "0.25rem",
-  },
-  headerButtons: {
-    display: "flex" as const,
-    alignItems: "center",
-    gap: "0.75rem",
-  },
-  refreshButton: {
-    padding: "0.5rem 1rem",
-    borderRadius: "0.5rem",
-    border: "1px solid #a7f3d0",
-    color: "#0d9488",
-    backgroundColor: "transparent",
-    transition: "background-color 0.3s ease",
-    fontWeight: "600",
-    cursor: "pointer",
-    fontSize: "0.875rem",
-  },
-  headerLogoutButton: {
-    padding: "0.5rem 1rem",
-    borderRadius: "0.5rem",
-    backgroundColor: "#dc2626",
-    color: "white",
-    transition: "background-color 0.3s ease",
-    fontWeight: "600",
-    cursor: "pointer",
-    fontSize: "0.875rem",
-    border: "none",
-  },
-  content: {
-    flex: 1,
-    overflowY: "auto" as const,
-    padding: "2rem",
-  },
-  contentContainer: {
-    maxWidth: "96rem",
-    margin: "0 auto",
-  },
-  loadingContainer: {
-    display: "flex" as const,
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100vh",
-    backgroundColor: "#ffffff",
-  },
-  loadingContent: {
-    textAlign: "center" as const,
-  },
-  spinner: {
-    display: "inline-block",
-    animation: "spin 1s linear infinite",
-    borderRadius: "50%",
-    height: "2rem",
-    width: "2rem",
-    borderWidth: "2px",
-    borderStyle: "solid",
-    borderColor: "#0d9488",
-    borderTopColor: "transparent",
-    marginBottom: "1rem",
-  },
-  loadingText: {
-    color: "#4b5563",
-  },
+export const metadata: Metadata = {
+  title: "Overview",
+  description: "At-a-glance stats for the MiftahCoding portfolio.",
 };
 
-export default function AdminDashboard() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [activeTab, setActiveTab] = useState<AdminTab>("messages");
-  const [isMd, setIsMd] = useState(false);
-  const [stats, setStats] = useState({
-    totalMessages: 0,
-    unreadMessages: 0,
-  });
+export default async function AdminDashboardPage() {
+  const [projectRows, blogRows, messageRows] = await Promise.all([
+    sql`SELECT count(*)::int AS count FROM projects`,
+    sql`SELECT count(*)::int AS count FROM blogs`,
+    sql`SELECT count(*)::int AS total, count(*) FILTER (WHERE read = false)::int AS unread FROM messages`,
+  ]);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMd(window.innerWidth >= 768);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const projects = projectRows[0]?.count ?? 0;
+  const blogs = blogRows[0]?.count ?? 0;
+  const messages = messageRows[0]?.total ?? 0;
+  const unreadMessages = messageRows[0]?.unread ?? 0;
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await fetch("/api/messages");
-        if (response.ok) {
-          setIsAuthenticated(true);
-          fetchStats();
-        } else {
-          window.location.href = "/admin?login=true";
-        }
-      } catch (error) {
-        console.error("Auth check failed:", error);
-        window.location.href = "/admin?login=true";
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
-
-  async function fetchStats() {
-    try {
-      const response = await fetch("/api/messages");
-      if (response.ok) {
-        const conversations = await response.json();
-        const totalMessages = conversations.reduce(
-          (acc: number, conv: any) => acc + conv.messages.length,
-          0
-        );
-        const unreadMessages = conversations.reduce(
-          (acc: number, conv: any) =>
-            acc +
-            conv.messages.filter(
-              (m: any) => !m.isRead && m.contactMethod !== "admin-reply"
-            ).length,
-          0
-        );
-
-        setStats({
-          totalMessages,
-          unreadMessages,
-        });
-      }
-    } catch (error) {
-      console.error("Failed to fetch stats:", error);
-    }
-  }
-
-  async function handleLogout() {
-    try {
-      await fetch("/api/auth/logout", { method: "POST" });
-      setIsAuthenticated(false);
-      window.location.href = "/";
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  }
-
-  const menuItems = [
-    { id: "messages", label: "Messages", icon: FiMessageSquare },
-    { id: "about", label: "About", icon: FiFileText },
-    { id: "projects", label: "Projects", icon: FiBriefcase },
-    { id: "work", label: "Work", icon: FiBook },
-    { id: "contact", label: "Contact", icon: FiMail },
-    { id: "profile", label: "Profile", icon: FiImage },
-    { id: "settings", label: "Settings", icon: FiSettings },
-  ] as const;
-
-  if (loading) {
-    return (
-      <div style={styles.loadingContainer}>
-        <div style={styles.loadingContent}>
-          <div style={styles.spinner}></div>
-          <p style={styles.loadingText}>Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return null;
-  }
+  const stats = [
+    {
+      label: "Projects",
+      value: projects,
+      href: "/admin/projects",
+      icon: FolderKanban,
+      accent: "from-teal-400 to-emerald-500",
+    },
+    {
+      label: "Blog Posts",
+      value: blogs,
+      href: "/admin/blogs",
+      icon: FileText,
+      accent: "from-sky-400 to-blue-500",
+    },
+    {
+      label: "Messages",
+      value: messages,
+      badge: unreadMessages,
+      href: "/admin/messages",
+      icon: Inbox,
+      accent: "from-violet-400 to-fuchsia-500",
+    },
+  ];
 
   return (
-    <div style={styles.container}>
-      {/* Sidebar */}
-      <aside style={{ ...styles.sidebar, ...(sidebarOpen ? styles.sidebarOpen : styles.sidebarClosed) }}>
-        {/* Header */}
-        <div style={styles.sidebarHeader}>
-          <h1 style={{ ...styles.sidebarTitle, ...(sidebarOpen ? {} : { display: "none" }) }}>
-            Admin
-          </h1>
-          <button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            style={{ ...styles.sidebarToggle }}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f1f5f9")}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
-          >
-            {sidebarOpen ? <FiX size={20} /> : <FiMenu size={20} />}
-          </button>
-        </div>
-
-        {/* Stats */}
-        {sidebarOpen && (
-          <div style={styles.statsContainer}>
-            <div style={styles.statBox}>
-              <p style={styles.statLabel}>Total Messages</p>
-              <p style={styles.statValue}>{stats.totalMessages}</p>
-            </div>
-            <div style={{ ...styles.statBox, backgroundImage: "linear-gradient(to bottom right, #fffbeb, #fcd34d)" }}>
-              <p style={styles.statLabel}>Unread</p>
-              <p style={{ ...styles.statValue, color: "#b45309" }}>{stats.unreadMessages}</p>
-            </div>
-          </div>
-        )}
-
-        {/* Menu */}
-        <nav style={styles.navbar}>
-          {menuItems.map(({ id, label, icon: Icon }) => (
-            <button
-              key={id}
-              onClick={() => setActiveTab(id)}
-              style={{
-                ...styles.menuButton,
-                ...(activeTab === id ? styles.menuButtonActive : styles.menuButtonInactive),
-              }}
-              onMouseEnter={(e) => {
-                if (activeTab !== id) {
-                  e.currentTarget.style.backgroundColor = "#f1f5f9";
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (activeTab !== id) {
-                  e.currentTarget.style.backgroundColor = "transparent";
-                }
-              }}
-              title={!sidebarOpen ? label : ""}
-            >
-              <Icon size={20} />
-              {sidebarOpen && <span>{label}</span>}
-            </button>
-          ))}
-        </nav>
-
-        {/* Logout Button */}
-        <button
-          onClick={handleLogout}
-          style={styles.logoutButton}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#fecaca")}
-          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#fee2e2")}
-        >
-          <FiLogOut size={20} />
-          {sidebarOpen && "Logout"}
-        </button>
-      </aside>
-
-      {/* Main Content */}
-      <div style={styles.mainContent}>
-        {/* Header */}
-        <header style={styles.header}>
-          <div>
-            <h2 style={styles.headerTitle}>
-              {menuItems.find((m) => m.id === activeTab)?.label || "Dashboard"}
-            </h2>
-            <p style={styles.headerSubtitle}>
-              {activeTab === "messages" && "Manage customer messages and support"}
-              {activeTab === "about" && "Edit your about section"}
-              {activeTab === "projects" && "Manage your projects"}
-              {activeTab === "work" && "Manage your work experience"}
-              {activeTab === "contact" && "Update contact information"}
-              {activeTab === "profile" && "Manage profile images"}
-              {activeTab === "settings" && "Admin settings and preferences"}
-            </p>
-          </div>
-          <div style={styles.headerButtons}>
-            <button
-              onClick={fetchStats}
-              style={styles.refreshButton}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#f0fdfa")}
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
-            >
-              Refresh
-            </button>
-            <button
-              onClick={handleLogout}
-              style={styles.headerLogoutButton}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#b91c1c")}
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#dc2626")}
-            >
-              Logout
-            </button>
-          </div>
-        </header>
-
-        {/* Content */}
-        <main style={styles.content}>
-          <div style={styles.contentContainer}>
-            {activeTab === "messages" && <AdminMessaging />}
-            {activeTab === "about" && <AdminAbout />}
-            {activeTab === "projects" && <AdminProjects />}
-            {activeTab === "work" && <AdminWork />}
-            {activeTab === "contact" && <AdminContact />}
-            {activeTab === "profile" && <ProfileImageUpload />}
-            {activeTab === "settings" && <AdminSettings />}
-          </div>
-        </main>
+    <div className="space-y-6">
+      <div className="grid gap-4 sm:grid-cols-3">
+        {stats.map(({ label, value, badge, href, icon: Icon, accent }) => (
+          <Link key={label} href={href} className="group block">
+            <GlassCard className="glass-hover p-5">
+              <div className="flex items-start justify-between">
+                <span
+                  className={`grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br ${accent} text-slate-950`}
+                >
+                  <Icon className="h-5 w-5" />
+                </span>
+                {typeof badge === "number" && badge > 0 && (
+                  <span className="rounded-full border border-teal-400/40 bg-teal-400/10 px-2 py-0.5 text-[11px] font-medium text-teal-300">
+                    {badge} unread
+                  </span>
+                )}
+              </div>
+              <p className="mt-4 font-mono text-3xl font-bold text-white">{value}</p>
+              <p className="mt-1 flex items-center gap-1 text-sm text-slate-400 transition-colors group-hover:text-teal-300">
+                {label}
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+              </p>
+            </GlassCard>
+          </Link>
+        ))}
       </div>
+
+      <GlassCard className="p-6">
+        <h2 className="font-semibold text-white">Quick Actions</h2>
+        <p className="mt-1 text-sm text-slate-400">
+          Manage your portfolio content from the sidebar. Changes go live on the
+          public site immediately.
+        </p>
+        <div className="mt-4 flex flex-wrap gap-3">
+          <Link href="/admin/projects" className="btn-primary !py-2">
+            Manage Projects
+          </Link>
+          <Link href="/admin/blogs" className="btn-ghost !py-2">
+            Write a Post
+          </Link>
+          <Link href="/admin/messages" className="btn-ghost !py-2">
+            Check Messages
+          </Link>
+        </div>
+      </GlassCard>
     </div>
   );
 }
-
-// Add animation styles
-if (typeof document !== "undefined") {
-  const style = document.createElement("style");
-  style.textContent = `
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-  `;
-  document.head.appendChild(style);
-}
-

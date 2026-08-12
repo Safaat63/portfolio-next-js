@@ -1,44 +1,78 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import "highlight.js/styles/github-dark.css";
 import "./globals.css";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer"; // <-- we'll create this next
+import { Providers } from "./providers";
+import { AmbientBackground } from "@/components/AmbientBackground";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
 });
+
+const siteUrl = process.env.NEXTAUTH_URL ?? "http://localhost:3000";
 
 export const metadata: Metadata = {
-  title: "Safaat Portfolio",
-  description: "Web Developer Portfolio built with Next.js",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "MiftahCoding — Frontend Developer & Creative Technologist",
+    template: "%s | MiftahCoding",
+  },
+  description:
+    "Full-stack developer building resilient, human-centered digital ecosystems. Frontend engineering, glassmorphic design, and production-grade web applications.",
+  keywords: [
+    "Frontend Developer",
+    "MiftahCoding",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "Portfolio",
+  ],
+  authors: [{ name: "Miftah", url: siteUrl }],
+  creator: "MiftahCoding",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: "MiftahCoding",
+    title: "MiftahCoding — Frontend Developer & Creative Technologist",
+    description:
+      "Full-stack developer building resilient, human-centered digital ecosystems.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MiftahCoding — Frontend Developer & Creative Technologist",
+    description:
+      "Full-stack developer building resilient, human-centered digital ecosystems.",
+    creator: "@miftahcoding",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-neutral-900`}
+        suppressHydrationWarning
+        className={`${inter.variable} ${jetbrainsMono.variable} min-h-screen font-sans antialiased`}
       >
-        {/* Navbar at the top */}
-        <Navbar />
-
-        {/* Main content area */}
-        <main className="min-h-screen px-6 md:px-12 py-8">
+        <Providers>
+          <AmbientBackground />
           {children}
-        </main>
-
-        {/* Footer at the bottom */}
-        <Footer />
+        </Providers>
       </body>
     </html>
   );
