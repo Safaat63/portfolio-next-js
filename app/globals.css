@@ -73,6 +73,15 @@ body {
   @apply bg-teal-400/40;
 }
 
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 .prose-blog {
   @apply prose prose-invert prose-lg max-w-none prose-headings:font-sans prose-headings:text-white prose-a:text-teal-300 prose-a:no-underline hover:prose-a:underline prose-strong:text-white prose-code:text-teal-300 prose-pre:border prose-pre:border-white/10 prose-pre:bg-slate-900/80 prose-pre:shadow-xl prose-hr:border-white/10 prose-blockquote:border-teal-400/40 prose-blockquote:text-slate-300;
 }
