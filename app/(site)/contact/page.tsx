@@ -6,7 +6,7 @@ import { ContactForm } from "@/components/ContactForm";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with MiftahCoding — project inquiries, freelance work, or just to say hello.",
+    "Get in touch with Safaat Munazat — project inquiries, freelance work, or just to say hello.",
 };
 
 const contactCards = [

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -8,7 +9,6 @@ import {
   FileText,
   Inbox,
   LogOut,
-  Hexagon,
 } from "lucide-react";
 import { logoutAction } from "@/app/actions";
 import { cn } from "@/lib/utils";
@@ -31,7 +31,13 @@ export function AdminSidebar({ userName, userEmail }: { userName: string; userEm
       <aside className="glass sticky top-24 hidden h-fit w-64 shrink-0 p-4 md:block">
         <div className="flex items-center gap-2.5 border-b border-white/10 px-2 pb-4">
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-teal-400 to-sky-500 text-slate-950">
-            <Hexagon className="h-5 w-5" />
+            <Image
+              src="/Three-Bodies-Problem.png"
+              alt="Safaat Munazat"
+              width={20}
+              height={20}
+              className="h-5 w-5"
+            />
           </span>
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-white">{userName}</p>
@@ -72,7 +78,13 @@ export function AdminSidebar({ userName, userEmail }: { userName: string; userEm
         <div className="glass flex items-center justify-between gap-2 p-2">
           <div className="flex items-center gap-1.5 px-1">
             <span className="grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br from-teal-400 to-sky-500 text-slate-950">
-              <Hexagon className="h-4 w-4" />
+              <Image
+                src="/Three-Bodies-Problem.png"
+                alt="Safaat Munazat"
+                width={16}
+                height={16}
+                className="h-4 w-4"
+              />
             </span>
             <span className="text-xs font-semibold text-white">{userName}</span>
           </div>

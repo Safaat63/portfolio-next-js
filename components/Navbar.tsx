@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowRight, Hexagon } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -26,10 +27,16 @@ export function Navbar() {
       <nav className="glass mx-auto mt-4 flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:mx-6 sm:px-6 lg:mx-auto">
         <Link href="/" className="group flex items-center gap-2.5" onClick={() => setMobileOpen(false)}>
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-teal-400 to-sky-500 text-slate-950 shadow-lg shadow-teal-500/30 transition-transform duration-300 group-hover:rotate-6">
-            <Hexagon className="h-5 w-5" />
+            <Image
+              src="/Three-Bodies-Problem.png"
+              alt="Safaat Munazat"
+              width={20}
+              height={20}
+              className="h-5 w-5"
+            />
           </span>
           <span className="font-mono text-sm font-bold tracking-tight text-white">
-            Miftah<span className="text-teal-300">Coding</span>
+            Safaat<span className="text-teal-300">Munazat</span>
           </span>
         </Link>
 

@@ -18,7 +18,7 @@ type SendEmailParams = {
 
 export async function sendEmail(params: SendEmailParams) {
   const { data, error } = await resend.emails.send({
-    from: params.from ?? process.env.RESEND_FROM_EMAIL ?? "MiftahCoding <onboarding@resend.dev>",
+    from: params.from ?? process.env.RESEND_FROM_EMAIL ?? "Safaat Munazat <onboarding@resend.dev>",
     to: params.to,
     subject: params.subject,
     html: params.html,
@@ -72,7 +72,7 @@ export function replyEmailHtml(input: {
           <p style="margin: 0; font-size: 13px; color: #94a3b8; font-style: italic;">${escapeHtml(input.originalMessage).replace(/\n/g, "<br/>")}</p>
         </div>
         <p style="margin: 28px 0 0; font-size: 13px; color: #64748b;">
-          — Sent from the MiftahCoding contact inbox
+          — Sent from the Safaat Munazat contact inbox
         </p>
       </div>
     </div>

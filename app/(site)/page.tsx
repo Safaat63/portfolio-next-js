@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Home",
   description:
-    "MiftahCoding — Frontend Developer building glassmorphic, full-stack web experiences with Next.js, Neon DB, and cloud-native tooling.",
+    "Safaat Munazat — Frontend Developer building glassmorphic, full-stack web experiences with Next.js, Neon DB, and cloud-native tooling.",
 };
 
 export default async function HomePage() {

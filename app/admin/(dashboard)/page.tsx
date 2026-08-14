@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Overview",
-  description: "At-a-glance stats for the MiftahCoding portfolio.",
+  description: "At-a-glance stats for the Safaat Munazat portfolio.",
 };
 
 export default async function AdminDashboardPage() {

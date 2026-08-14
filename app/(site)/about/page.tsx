@@ -10,15 +10,15 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "The story behind MiftahCoding — frontend engineering, design systems, and the milestones along the way.",
+    "The story behind Safaat Munazat — frontend engineering, design systems, and the milestones along the way.",
 };
 
 const milestones: Milestone[] = [
   {
     year: "2024",
-    title: "MiftahCoding Is Born",
+    title: "The Portfolio Is Born",
     description:
-      "Launched MiftahCoding as a digital ecosystem: a portfolio, content hub, and admin suite built on a serverless stack.",
+      "Launched my portfolio as a digital ecosystem: a content hub and admin suite built on a serverless stack.",
     icon: "rocket",
   },
   {

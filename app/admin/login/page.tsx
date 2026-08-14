@@ -5,7 +5,7 @@ import { LoginForm } from "@/components/LoginForm";
 
 export const metadata: Metadata = {
   title: "Admin Login",
-  description: "Sign in to the MiftahCoding admin dashboard.",
+  description: "Sign in to the Safaat Munazat admin dashboard.",
   robots: { index: false, follow: false },
 };
 
@@ -20,7 +20,7 @@ export default async function AdminLoginPage() {
       <div className="w-full max-w-md">
         <LoginForm />
         <p className="mt-6 text-center font-mono text-xs text-slate-600">
-          Protected area &middot; MiftahCoding
+          Protected area &middot; Safaat Munazat
         </p>
       </div>
     </div>

@@ -1,5 +1,5 @@
 -- ============================================================
--- MiftahCoding Portfolio — Neon PostgreSQL Schema
+-- Safaat Munazat Portfolio — Neon PostgreSQL Schema
 -- Run this file directly in the Neon SQL Editor.
 -- ============================================================
 
@@ -65,7 +65,7 @@ CREATE INDEX IF NOT EXISTS idx_messages_read ON messages (read) WHERE read = fal
 
 -- Initial admin user. Password: Admin@123
 INSERT INTO users (name, email, password, role)
-SELECT 'Miftah', 'safaatmunajat63@gmail.com', '$2b$12$TCW0BXIcR7yet7QqRv8vw.UHWn.vIVtRVPM0axWXM962voHA5Ri3y', 'ADMIN'
+SELECT 'Safaat Munazat', 'safaatmunajat63@gmail.com', '$2b$12$TCW0BXIcR7yet7QqRv8vw.UHWn.vIVtRVPM0axWXM962voHA5Ri3y', 'ADMIN'
 WHERE NOT EXISTS (SELECT 1 FROM users WHERE email = 'safaatmunajat63@gmail.com');
 
 -- Sample projects
@@ -140,5 +140,5 @@ INSERT INTO messages (name, email, subject, message) VALUES
   'Sara Mitchell',
   'sara.mitchell@example.com',
   'Project inquiry',
-  'Hi Miftah, we are looking for a frontend engineer to help ship our SaaS dashboard redesign. Your glassmorphic work caught our eye — could we chat next week?'
+  'Hi Safaat Munazat, we are looking for a frontend engineer to help ship our SaaS dashboard redesign. Your glassmorphic work caught our eye — could we chat next week?'
 );

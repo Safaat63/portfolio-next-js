@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Mail, Hexagon } from "lucide-react";
+import Image from "next/image";
+import { Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon, XIcon } from "@/components/SocialIcons";
 
 const socials = [
@@ -23,10 +24,16 @@ export function Footer() {
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
           <div className="flex items-center gap-2.5">
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-teal-400 to-sky-500 text-slate-950">
-              <Hexagon className="h-5 w-5" />
+              <Image
+                src="/Three-Bodies-Problem.png"
+                alt="Safaat Munazat"
+                width={20}
+                height={20}
+                className="h-5 w-5"
+              />
             </span>
             <span className="font-mono text-sm font-bold text-white">
-              Miftah<span className="text-teal-300">Coding</span>
+              Safaat<span className="text-teal-300">Munazat</span>
             </span>
           </div>
 
@@ -70,7 +77,7 @@ export function Footer() {
 
         <div className="flex flex-col items-center justify-between gap-2 border-t border-white/10 pt-6 text-center text-xs text-slate-500 md:flex-row md:text-left">
           <p>
-            &copy; {new Date().getFullYear()} MiftahCoding. Crafted with care in the digital ecosystem.
+            &copy; {new Date().getFullYear()} Safaat Munazat. Crafted with care in the digital ecosystem.
           </p>
           <p className="font-mono">
             Next.js &middot; Neon &middot; Cloudinary &middot; Resend

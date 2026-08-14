@@ -22,34 +22,34 @@ const siteUrl = process.env.NEXTAUTH_URL ?? "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "MiftahCoding — Frontend Developer & Creative Technologist",
-    template: "%s | MiftahCoding",
+    default: "Safaat Munazat — Frontend Developer & Creative Technologist",
+    template: "%s | Safaat Munazat",
   },
   description:
     "Full-stack developer building resilient, human-centered digital ecosystems. Frontend engineering, glassmorphic design, and production-grade web applications.",
   keywords: [
     "Frontend Developer",
-    "MiftahCoding",
+    "Safaat Munazat",
     "Next.js",
     "React",
     "TypeScript",
     "Tailwind CSS",
     "Portfolio",
   ],
-  authors: [{ name: "Miftah", url: siteUrl }],
-  creator: "MiftahCoding",
+  authors: [{ name: "Safaat Munazat", url: siteUrl }],
+  creator: "Safaat Munazat",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteUrl,
-    siteName: "MiftahCoding",
-    title: "MiftahCoding — Frontend Developer & Creative Technologist",
+    siteName: "Safaat Munazat",
+    title: "Safaat Munazat — Frontend Developer & Creative Technologist",
     description:
       "Full-stack developer building resilient, human-centered digital ecosystems.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "MiftahCoding — Frontend Developer & Creative Technologist",
+    title: "Safaat Munazat — Frontend Developer & Creative Technologist",
     description:
       "Full-stack developer building resilient, human-centered digital ecosystems.",
     creator: "@miftahcoding",
