@@ -65,6 +65,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="apple-mobile-web-app-title" content="Safaat Munazat" />
+      </head>
       <body
         suppressHydrationWarning
         className={`${inter.variable} ${jetbrainsMono.variable} min-h-screen font-sans antialiased`}

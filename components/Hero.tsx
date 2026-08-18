@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, FileText, Sparkles } from "lucide-react";
 
@@ -101,26 +102,43 @@ export function Hero({ stats }: { stats: HeroStats }) {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          {[
-            { value: stats.projects, label: "Projects Shipped", delay: 0.15 },
-            { value: stats.articles, label: "Articles Written", delay: 0.25 },
-            { value: stats.clients, label: "Happy Clients", delay: 0.35 },
-            { value: "+2", label: "Years Building", delay: 0.45 },
-          ].map((stat) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: stat.delay }}
-              className="glass glass-hover flex flex-col gap-1 p-6"
-            >
-              <span className="font-mono text-3xl font-bold text-gradient">
-                {stat.value}
-              </span>
-              <span className="text-sm text-slate-400">{stat.label}</span>
-            </motion.div>
-          ))}
+        <div className="relative overflow-hidden">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.9, delay: 0.2 }}
+            className="pointer-events-none absolute right-0 top-1/2 z-0 -translate-y-1/2 translate-x-1/2"
+          >
+            <Image
+              src="/Three-Bodies-Problem.png"
+              alt=""
+              width={1080}
+              height={1080}
+              className="h-[170%] w-auto object-contain opacity-40 blur-2xl"
+            />
+          </motion.div>
+
+          <div className="relative z-10 grid grid-cols-2 gap-4">
+            {[
+              { value: stats.projects, label: "Projects Shipped", delay: 0.15 },
+              { value: stats.articles, label: "Articles Written", delay: 0.25 },
+              { value: stats.clients, label: "Happy Clients", delay: 0.35 },
+              { value: "+2", label: "Years Building", delay: 0.45 },
+            ].map((stat) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: stat.delay }}
+                className="glass glass-hover flex flex-col gap-1 p-6"
+              >
+                <span className="font-mono text-3xl font-bold text-gradient">
+                  {stat.value}
+                </span>
+                <span className="text-sm text-slate-400">{stat.label}</span>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
