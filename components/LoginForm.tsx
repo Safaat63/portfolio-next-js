@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
 import { LoaderCircle, LockKeyhole } from "lucide-react";
 import { loginAction, type LoginState } from "@/app/actions";
+import { TurnstileWidget } from "@/components/TurnstileWidget";
 import { cn } from "@/lib/utils";
 
 const initialState: LoginState = {};
@@ -63,7 +64,13 @@ export function LoginForm() {
         />
       </div>
 
-      <button type="submit" disabled={pending} className="btn-primary w-full">
+      <TurnstileWidget theme="dark" />
+
+      <button
+        type="submit"
+        disabled={pending}
+        className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+      >
         {pending ? (
           <>
             <LoaderCircle className="h-4 w-4 animate-spin" />

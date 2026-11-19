@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { FileText } from "lucide-react";
-import { sql } from "@/lib/db";
+import { sql, type Row } from "@/lib/db";
 import { mapBlog } from "@/lib/types";
 import { BlogCard } from "@/components/BlogCard";
 import { BlogFilters } from "@/components/BlogFilters";
@@ -35,11 +35,11 @@ export default async function BlogPage({ searchParams }: { searchParams: SearchP
   }
 
   const [blogRows, tagRows] = await Promise.all([
-    sql.query(
+    sql.unsafe<Row[]>(
       `SELECT * FROM blogs WHERE ${conditions.join(" AND ")} ORDER BY created_at DESC`,
-      values
+      values as (string | number | boolean | null)[]
     ),
-    sql`SELECT DISTINCT unnest(tags) AS tag FROM blogs WHERE published = true ORDER BY tag`,
+    sql<Row[]>`SELECT DISTINCT unnest(tags) AS tag FROM blogs WHERE published = true ORDER BY tag`,
   ]);
 
   const blogs = blogRows.map(mapBlog);
