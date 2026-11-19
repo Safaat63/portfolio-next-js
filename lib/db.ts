@@ -52,6 +52,7 @@ function createResilientSql(client: typeof rawSql): typeof rawSql {
       if (prop === "unsafe") {
         return function (query: string, values?: unknown[]) {
           const isSelect = /^\s*SELECT/i.test(query.trim());
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           return target.unsafe(query, values as any).catch((err: unknown) => {
             const message = err instanceof Error ? err.message : String(err);
             console.warn(`[Database unsafe Warning]: ${message}`);
