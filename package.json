@@ -11,6 +11,7 @@
     "start": "next start -H 0.0.0.0",
     "lint": "eslint",
     "db:init": "node scripts/init-db.mjs",
+    "db:seed-admin": "node scripts/seed-admin.mjs",
     "auto-login": "node scripts/auto-login.mjs"
   },
   "dependencies": {

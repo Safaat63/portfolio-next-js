@@ -20,10 +20,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!parsed.success) return null;
 
         const { email, password } = parsed.data;
+        // Normalize email: trim whitespace and lowercase for case-insensitive match
+        const normalizedEmail = email.trim().toLowerCase();
         const rows = await sql`
           SELECT id, name, email, password, role
           FROM users
-          WHERE email = ${email}
+          WHERE LOWER(email) = ${normalizedEmail}
           LIMIT 1
         `;
         const user = rows[0];
