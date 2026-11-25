@@ -40,11 +40,11 @@ export default function ContactPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 pb-16 pt-32 sm:px-6 sm:pt-40">
       <div className="mb-12 text-center">
-        <p className="font-mono text-sm text-teal-300">&lt;contact /&gt;</p>
-        <h1 className="mt-3 text-4xl font-bold text-white sm:text-5xl">
-          Let&apos;s Build Something <span className="text-gradient">Great</span>
+        <span className="code-tag">&lt;contact /&gt;</span>
+        <h1 className="mt-3 text-4xl font-extrabold text-white sm:text-5xl">
+          Let&apos;s Build Something <span className="text-yellow-400">Great</span>
         </h1>
-        <p className="mx-auto mt-4 max-w-xl text-slate-400">
+        <p className="mx-auto mt-4 max-w-xl text-zinc-400">
           Whether you have a project in mind, a role to fill, or just want to
           talk shop — my inbox is always open.
         </p>
@@ -55,39 +55,38 @@ export default function ContactPage() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
             {contactCards.map(({ icon: Icon, title, value, href }) => (
               <GlassCard key={title} className="glass-hover p-5">
-                <span className="grid h-10 w-10 place-items-center rounded-xl bg-teal-400/15 text-teal-300">
+                <span className="grid h-10 w-10 place-items-center rounded-xl border border-yellow-400/20 bg-yellow-400/10 text-yellow-400">
                   <Icon className="h-5 w-5" />
                 </span>
-                <h3 className="mt-3 text-sm font-semibold uppercase tracking-wider text-slate-400">
+                <h3 className="mt-3 text-xs font-mono font-semibold uppercase tracking-wider text-zinc-400">
                   {title}
                 </h3>
                 {href ? (
                   <a
                     href={href}
-                    className="mt-1 block text-sm font-medium text-white transition-colors hover:text-teal-300"
+                    className="mt-1 block text-sm font-medium text-white transition-colors hover:text-yellow-400"
                   >
                     {value}
                   </a>
                 ) : (
-                  <p className="mt-1 text-sm font-medium text-white">{value}</p>
+                  <p className="mt-1 text-sm font-medium text-zinc-200">{value}</p>
                 )}
               </GlassCard>
             ))}
           </div>
 
-          <div className="glass flex items-center gap-3 p-5">
-            <span className="relative flex h-3 w-3 shrink-0">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75" />
-              <span className="relative inline-flex h-3 w-3 rounded-full bg-teal-400" />
-            </span>
-            <p className="text-sm text-slate-300">
-              Currently <span className="font-semibold text-teal-300">available</span> for
-              new projects starting soon.
+          <GlassCard className="p-6">
+            <h3 className="font-semibold text-white">Project Availability</h3>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+              Currently taking on select freelance and contract engagements for
+              frontend architecture, design systems, and full-stack Next.js products.
             </p>
-          </div>
+          </GlassCard>
         </div>
 
-        <ContactForm />
+        <div>
+          <ContactForm />
+        </div>
       </div>
     </div>
   );

@@ -24,9 +24,9 @@ export function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <nav className="glass mx-auto mt-4 flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:mx-6 sm:px-6 lg:mx-auto">
+      <nav className="glass mx-auto mt-4 flex max-w-6xl items-center justify-between gap-4 px-4 py-2.5 sm:mx-6 sm:px-6 lg:mx-auto">
         <Link href="/" className="group flex items-center gap-2.5" onClick={() => setMobileOpen(false)}>
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-teal-400 to-sky-500 text-slate-950 shadow-lg shadow-teal-500/30 transition-transform duration-300 group-hover:rotate-6">
+          <span className="grid h-9 w-9 place-items-center rounded-xl bg-yellow-400 text-zinc-950 transition-transform duration-300 group-hover:scale-105">
             <Image
               src="/Three-Bodies-Problem.png"
               alt="Safaat Munazat"
@@ -36,7 +36,7 @@ export function Navbar() {
             />
           </span>
           <span className="font-mono text-sm font-bold tracking-tight text-white">
-            Safaat<span className="text-teal-300">Munazat</span>
+            Safaat<span className="text-yellow-400">Munazat</span>
           </span>
         </Link>
 
@@ -47,13 +47,13 @@ export function Navbar() {
               href={link.href}
               className={cn(
                 "relative rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200",
-                isActive(link.href) ? "text-white" : "text-slate-400 hover:text-white"
+                isActive(link.href) ? "text-white" : "text-zinc-400 hover:text-white"
               )}
             >
               {isActive(link.href) && (
                 <motion.span
                   layoutId="nav-active"
-                  className="absolute inset-0 rounded-lg border border-teal-400/40 bg-teal-400/10"
+                  className="absolute inset-0 rounded-lg border border-yellow-400/40 bg-yellow-400/10"
                   transition={{ type: "spring", stiffness: 380, damping: 30 }}
                 />
               )}
@@ -71,7 +71,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className="rounded-lg border border-white/10 bg-white/5 p-2 text-slate-200 transition-colors hover:border-teal-400/50 md:hidden"
+          className="rounded-lg border border-white/10 bg-white/5 p-2 text-zinc-200 transition-colors hover:border-yellow-400/50 md:hidden"
           onClick={() => setMobileOpen((v) => !v)}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
         >
@@ -96,8 +96,8 @@ export function Navbar() {
                 className={cn(
                   "rounded-lg px-4 py-3 text-sm font-medium transition-colors",
                   isActive(link.href)
-                    ? "border border-teal-400/40 bg-teal-400/10 text-white"
-                    : "text-slate-400 hover:bg-white/5 hover:text-white"
+                    ? "border border-yellow-400/40 bg-yellow-400/10 text-yellow-300 font-semibold"
+                    : "text-zinc-400 hover:bg-white/5 hover:text-white"
                 )}
               >
                 {link.label}

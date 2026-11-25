@@ -187,17 +187,17 @@ export function ProjectsManager({ projects }: { projects: Project[] }) {
                   <h3 className="font-semibold text-white">{project.title}</h3>
                   <span
                     className={cn(
-                      "rounded-full border px-2 py-0.5 text-[11px] font-medium",
+                      "rounded-full border px-2 py-0.5 text-[11px] font-mono font-bold",
                       project.featured
-                        ? "border-teal-400/40 bg-teal-400/10 text-teal-300"
-                        : "border-white/10 bg-white/5 text-slate-500"
+                        ? "border-yellow-400/40 bg-yellow-400/10 text-yellow-300"
+                        : "border-white/10 bg-white/5 text-zinc-500"
                     )}
                   >
                     {project.featured ? "Featured" : "Standard"}
                   </span>
                 </div>
-                <p className="mt-1 font-mono text-xs text-slate-500">/{project.slug}</p>
-                <p className="mt-1 line-clamp-1 text-sm text-slate-400">{project.description}</p>
+                <p className="mt-1 font-mono text-xs text-zinc-500">/{project.slug}</p>
+                <p className="mt-1 line-clamp-1 text-sm text-zinc-400">{project.description}</p>
               </div>
 
               <div className="flex shrink-0 items-center gap-2">
@@ -209,12 +209,12 @@ export function ProjectsManager({ projects }: { projects: Project[] }) {
                   className={cn(
                     "grid h-9 w-9 place-items-center rounded-xl border transition-all duration-200",
                     project.featured
-                      ? "border-teal-400/50 bg-teal-400/15 text-teal-300"
-                      : "border-white/10 bg-white/5 text-slate-400 hover:border-teal-400/40 hover:text-teal-300"
+                      ? "border-yellow-400/50 bg-yellow-400/15 text-yellow-300"
+                      : "border-white/10 bg-white/5 text-zinc-400 hover:border-yellow-400/40 hover:text-yellow-300"
                   )}
                 >
                   {project.featured ? (
-                    <Star className="h-4 w-4 fill-teal-300" />
+                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                   ) : (
                     <StarOff className="h-4 w-4" />
                   )}
@@ -362,7 +362,7 @@ export function ProjectsManager({ projects }: { projects: Project[] }) {
                 type="checkbox"
                 checked={form.featured}
                 onChange={(e) => updateField("featured", e.target.checked)}
-                className="h-4 w-4 rounded border-white/20 accent-teal-400"
+                className="h-4 w-4 rounded border-white/20 accent-yellow-400"
               />
               <span className="text-sm text-slate-300">
                 Feature this project on the homepage

@@ -21,8 +21,8 @@ export function SkillSlider({ skills }: { skills: Skill[] }) {
           className="glass glass-hover p-5"
         >
           <div className="flex items-center justify-between">
-            <span className="font-medium text-white">{skill.name}</span>
-            <span className="font-mono text-sm text-teal-300">{skill.level}%</span>
+            <span className="font-semibold text-white">{skill.name}</span>
+            <span className="font-mono text-sm font-bold text-yellow-400">{skill.level}%</span>
           </div>
           <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-white/10">
             <motion.div
@@ -30,10 +30,10 @@ export function SkillSlider({ skills }: { skills: Skill[] }) {
               whileInView={{ width: `${skill.level}%` }}
               viewport={{ once: true }}
               transition={{ duration: 1, ease: "easeOut", delay: 0.15 }}
-              className="h-full rounded-full bg-gradient-to-r from-teal-400 to-sky-500"
+              className="h-full rounded-full bg-yellow-400"
             />
           </div>
-          <p className="mt-3 text-sm leading-relaxed text-slate-400">{skill.blurb}</p>
+          <p className="mt-3 text-sm leading-relaxed text-zinc-400">{skill.blurb}</p>
         </motion.div>
       ))}
     </div>

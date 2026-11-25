@@ -10,7 +10,7 @@ export function BlogCard({ blog }: { blog: Blog }) {
   return (
     <GlassCard className="glass-hover group flex flex-col overflow-hidden p-0">
       {blog.coverImage && (
-        <div className="relative aspect-video w-full overflow-hidden">
+        <div className="relative aspect-video w-full overflow-hidden bg-zinc-950">
           <CloudImage
             src={withTransform(blog.coverImage, "w_1000,q_auto,f_auto")}
             alt={blog.title}
@@ -22,7 +22,7 @@ export function BlogCard({ blog }: { blog: Blog }) {
       )}
 
       <div className="flex flex-1 flex-col p-6">
-        <div className="flex items-center gap-4 text-xs text-slate-500">
+        <div className="flex items-center gap-4 text-xs font-mono text-zinc-500">
           <span className="inline-flex items-center gap-1.5">
             <CalendarDays className="h-3.5 w-3.5" />
             {formatDate(blog.createdAt)}
@@ -33,10 +33,10 @@ export function BlogCard({ blog }: { blog: Blog }) {
           </span>
         </div>
 
-        <h3 className="mt-3 text-lg font-semibold text-white transition-colors group-hover:text-teal-300">
+        <h3 className="mt-3 text-lg font-semibold text-white transition-colors group-hover:text-yellow-400">
           {blog.title}
         </h3>
-        <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-slate-400">
+        <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-zinc-400">
           {blog.excerpt}
         </p>
 
@@ -44,7 +44,7 @@ export function BlogCard({ blog }: { blog: Blog }) {
           {blog.tags.slice(0, 4).map((tag) => (
             <span
               key={tag}
-              className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[11px] text-teal-300"
+              className="rounded-md border border-yellow-400/20 bg-yellow-400/5 px-2 py-0.5 font-mono text-[11px] text-yellow-400"
             >
               #{tag}
             </span>
@@ -53,7 +53,7 @@ export function BlogCard({ blog }: { blog: Blog }) {
 
         <Link
           href={`/blog/${blog.slug}`}
-          className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-teal-300 transition-colors hover:text-teal-200"
+          className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-yellow-400 transition-colors hover:text-yellow-300"
         >
           Read article
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

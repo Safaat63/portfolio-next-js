@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, FileText, Sparkles } from "lucide-react";
+import { ArrowRight, FileText } from "lucide-react";
 
 const roles = [
   "Frontend Developer",
@@ -29,36 +29,39 @@ export function Hero({ stats }: { stats: HeroStats }) {
   }, []);
 
   return (
-    <section className="relative mx-auto max-w-6xl px-4 pb-10 pt-32 sm:px-6 sm:pt-40">
+    <section className="relative mx-auto max-w-6xl px-4 pb-12 pt-32 sm:px-6 sm:pt-40">
       <div className="grid items-center gap-12 lg:grid-cols-[1.2fr_0.8fr]">
         <div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium text-teal-300"
+            className="glass inline-flex items-center gap-2.5 rounded-full px-3.5 py-1.5 text-xs font-mono font-medium text-zinc-300"
           >
-            <Sparkles className="h-3.5 w-3.5" />
-            Open to new opportunities
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-yellow-400 opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-yellow-400"></span>
+            </span>
+            Available for new opportunities
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="mt-6 text-4xl font-bold leading-tight tracking-tight text-white sm:text-6xl"
+            className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-6xl"
           >
             Frontend Developer at{" "}
-            <span className="text-gradient">MiftahCoding</span>
+            <span className="text-yellow-400">MiftahCoding</span>
           </motion.h1>
 
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-4 flex h-10 items-center gap-2 font-mono text-lg text-slate-300 sm:text-xl"
+            className="mt-4 flex h-10 items-center gap-2 font-mono text-lg text-zinc-300 sm:text-xl"
           >
-            <span className="text-teal-300">&gt;</span>
+            <span className="font-bold text-yellow-400">&gt;</span>
             <AnimatePresence mode="wait">
               <motion.span
                 key={roleIndex}
@@ -70,17 +73,17 @@ export function Hero({ stats }: { stats: HeroStats }) {
                 {roles[roleIndex]}
               </motion.span>
             </AnimatePresence>
-            <span className="animate-pulse text-teal-300">_</span>
+            <span className="animate-pulse font-bold text-yellow-400">_</span>
           </motion.div>
 
           <motion.p
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-6 max-w-xl text-base leading-relaxed text-slate-400"
+            className="mt-6 max-w-xl text-base leading-relaxed text-zinc-400"
           >
             I design and build resilient, human-centered digital ecosystems — from
-            glassmorphic interfaces to full-stack products powered by serverless
+            frosted glassmorphic interfaces to full-stack products powered by serverless
             Postgres, edge auth, and modern media pipelines.
           </motion.p>
 
@@ -116,10 +119,10 @@ export function Hero({ stats }: { stats: HeroStats }) {
                 transition={{ duration: 0.5, delay: stat.delay }}
                 className="glass glass-hover flex flex-col gap-1 p-6"
               >
-                <span className="font-mono text-3xl font-bold text-gradient">
+                <span className="font-mono text-3xl font-extrabold text-yellow-400">
                   {stat.value}
                 </span>
-                <span className="text-sm text-slate-400">{stat.label}</span>
+                <span className="text-sm font-medium text-zinc-400">{stat.label}</span>
               </motion.div>
             ))}
           </div>

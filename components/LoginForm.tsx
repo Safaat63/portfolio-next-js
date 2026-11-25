@@ -4,7 +4,6 @@ import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
 import { LoaderCircle, LockKeyhole } from "lucide-react";
 import { loginAction, type LoginState } from "@/app/actions";
-import { TurnstileWidget } from "@/components/TurnstileWidget";
 import { cn } from "@/lib/utils";
 
 const initialState: LoginState = {};
@@ -19,7 +18,7 @@ export function LoginForm() {
       <input type="hidden" name="callbackUrl" value={callbackUrl} />
 
       <div className="flex flex-col items-center text-center">
-        <span className="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-teal-400 to-sky-500 text-slate-950 shadow-lg shadow-teal-500/30">
+        <span className="grid h-14 w-14 place-items-center rounded-2xl bg-yellow-400 text-zinc-950">
           <LockKeyhole className="h-6 w-6" />
         </span>
         <h1 className="mt-4 text-2xl font-bold text-white">Admin Access</h1>
@@ -64,12 +63,10 @@ export function LoginForm() {
         />
       </div>
 
-      <TurnstileWidget theme="dark" />
-
       <button
         type="submit"
         disabled={pending}
-        className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+        className="btn-primary w-full"
       >
         {pending ? (
           <>

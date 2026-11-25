@@ -14,19 +14,8 @@ const primaryStack = [
   "Cloudinary",
   "PostgreSQL",
   "Node.js",
-];
-
-const dotColors = [
-  "bg-teal-400",
-  "bg-sky-400",
-  "bg-violet-400",
-  "bg-teal-300",
-  "bg-blue-400",
-  "bg-emerald-400",
-  "bg-fuchsia-400",
-  "bg-cyan-400",
-  "bg-indigo-400",
-  "bg-teal-500",
+  "Docker",
+  "Dokploy",
 ];
 
 export function TechStack() {
@@ -113,11 +102,14 @@ export function TechStack() {
   return (
     <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <div className="glass relative overflow-hidden p-8">
-        <div className="mb-8 flex items-center justify-center gap-3 text-center">
-          <Boxes className="h-6 w-6 text-teal-300" />
-          <h2 className="text-3xl font-bold text-white">
-            The <span className="text-gradient">Tech Stack</span>
-          </h2>
+        <div className="mb-8 flex flex-col items-center justify-center text-center">
+          <span className="code-tag mb-3">&lt;technologies /&gt;</span>
+          <div className="flex items-center gap-3">
+            <Boxes className="h-6 w-6 text-yellow-400" />
+            <h2 className="text-3xl font-extrabold text-white">
+              The <span className="text-yellow-400">Tech Stack</span>
+            </h2>
+          </div>
         </div>
 
         <div
@@ -125,15 +117,15 @@ export function TechStack() {
           onMouseEnter={showControls}
           onMouseLeave={scheduleHide}
         >
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-slate-900 to-transparent" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-slate-900 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-zinc-950/80 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-zinc-950/80 to-transparent" />
 
           <button
             type="button"
             onClick={() => scrollBy("left")}
             aria-disabled={!canScrollLeft}
             aria-label="Scroll left"
-            className={`absolute left-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center text-white drop-shadow-md transition-all duration-300 hover:text-teal-300 ${
+            className={`absolute left-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center text-white drop-shadow-md transition-all duration-300 hover:text-yellow-400 ${
               controlsVisible
                 ? canScrollLeft
                   ? "opacity-100"
@@ -149,7 +141,7 @@ export function TechStack() {
             onClick={() => scrollBy("right")}
             aria-disabled={!canScrollRight}
             aria-label="Scroll right"
-            className={`absolute right-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center text-white drop-shadow-md transition-all duration-300 hover:text-teal-300 ${
+            className={`absolute right-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center text-white drop-shadow-md transition-all duration-300 hover:text-yellow-400 ${
               controlsVisible
                 ? canScrollRight
                   ? "opacity-100"
@@ -162,29 +154,21 @@ export function TechStack() {
 
           <div
             ref={scrollRef}
-            className="no-scrollbar flex cursor-grab gap-4 overflow-x-auto px-16 py-2 active:cursor-grabbing"
+            className="no-scrollbar flex cursor-grab gap-3.5 overflow-x-auto px-16 py-2 active:cursor-grabbing"
           >
-            {primaryStack.map((tech, index) => (
+            {primaryStack.map((tech) => (
               <div
                 key={tech}
                 className="glass glass-hover flex shrink-0 items-center gap-2.5 rounded-xl px-5 py-3"
               >
-                <span
-                  className={`h-2 w-2 rounded-full ${dotColors[index % dotColors.length]}`}
-                />
-                <span className="whitespace-nowrap font-mono text-sm text-slate-200">
+                <span className="h-2 w-2 rounded-full bg-yellow-400" />
+                <span className="whitespace-nowrap font-mono text-sm font-medium text-zinc-200">
                   {tech}
                 </span>
               </div>
             ))}
           </div>
         </div>
-
-        <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-slate-400">
-          A battle-tested toolkit for shipping fast, accessible, and beautiful
-          web applications — from server components to serverless databases,
-          edge authentication to cloud media delivery.
-        </p>
       </div>
     </section>
   );

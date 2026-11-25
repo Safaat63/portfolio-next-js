@@ -13,8 +13,8 @@ export function ContactForm() {
   if (state.success) {
     return (
       <div className="glass flex flex-col items-center gap-4 p-10 text-center">
-        <span className="grid h-14 w-14 place-items-center rounded-full border border-teal-400/40 bg-teal-400/10">
-          <CircleCheck className="h-7 w-7 text-teal-300" />
+        <span className="grid h-14 w-14 place-items-center rounded-full border border-yellow-400/40 bg-yellow-400/10">
+          <CircleCheck className="h-7 w-7 text-yellow-400" />
         </span>
         <h3 className="text-xl font-semibold text-white">Message sent!</h3>
         <p className="max-w-sm text-sm leading-relaxed text-slate-400">

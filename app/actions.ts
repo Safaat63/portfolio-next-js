@@ -28,8 +28,6 @@ function toNullableString(value: unknown): string | null {
   return str.length > 0 ? str : null;
 }
 
-import { verifyTurnstileToken } from "@/lib/turnstile";
-
 export type LoginState = {
   error?: string;
 };
@@ -38,13 +36,6 @@ export async function loginAction(prevState: LoginState, formData: FormData): Pr
   const email = formData.get("email");
   const password = formData.get("password");
   const callbackUrl = (formData.get("callbackUrl") as string) || "/admin";
-  const turnstileToken = formData.get("cf-turnstile-response") as string | null;
-
-  // Validate CAPTCHA
-  const captchaResult = await verifyTurnstileToken(turnstileToken);
-  if (!captchaResult.success) {
-    return { error: captchaResult.error || "CAPTCHA verification failed. Please try again." };
-  }
 
   try {
     await signIn("credentials", {

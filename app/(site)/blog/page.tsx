@@ -48,11 +48,11 @@ export default async function BlogPage({ searchParams }: { searchParams: SearchP
   return (
     <div className="mx-auto max-w-6xl px-4 pb-16 pt-32 sm:px-6 sm:pt-40">
       <div className="mb-10 text-center">
-        <p className="font-mono text-sm text-teal-300">&lt;articles /&gt;</p>
-        <h1 className="mt-3 text-4xl font-bold text-white sm:text-5xl">
-          The <span className="text-gradient">Blog</span>
+        <span className="code-tag">&lt;articles /&gt;</span>
+        <h1 className="mt-3 text-4xl font-extrabold text-white sm:text-5xl">
+          The <span className="text-yellow-400">Blog</span>
         </h1>
-        <p className="mx-auto mt-4 max-w-xl text-slate-400">
+        <p className="mx-auto mt-4 max-w-xl text-zinc-400">
           Notes on frontend engineering, architecture decisions, and building
           production software for the modern web.
         </p>

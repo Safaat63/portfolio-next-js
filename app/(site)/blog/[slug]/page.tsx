@@ -58,7 +58,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
     <article className="mx-auto max-w-6xl px-4 pb-16 pt-28 sm:px-6 sm:pt-36">
       <Link
         href="/blog"
-        className="inline-flex items-center gap-2 text-sm text-slate-400 transition-colors hover:text-teal-300"
+        className="inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-yellow-400"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to Blog
@@ -66,7 +66,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
 
       <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1fr)_240px]">
         <div className="min-w-0">
-          <div className="mb-4 flex flex-wrap items-center gap-4 text-xs text-slate-500">
+          <div className="mb-4 flex flex-wrap items-center gap-4 text-xs font-mono text-zinc-500">
             <span className="inline-flex items-center gap-1.5">
               <CalendarDays className="h-3.5 w-3.5" />
               {formatDate(blog.createdAt)}
@@ -77,17 +77,17 @@ export default async function BlogPostPage({ params }: { params: Params }) {
             </span>
           </div>
 
-          <h1 className="text-3xl font-bold leading-tight text-white sm:text-5xl">
+          <h1 className="text-3xl font-extrabold leading-tight text-white sm:text-5xl">
             {blog.title}
           </h1>
 
-          <p className="mt-4 text-lg leading-relaxed text-slate-400">{blog.excerpt}</p>
+          <p className="mt-4 text-lg leading-relaxed text-zinc-400">{blog.excerpt}</p>
 
           <div className="mt-4 flex flex-wrap gap-2">
             {blog.tags.map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-xs text-teal-300"
+                className="inline-flex items-center gap-1 rounded-full border border-yellow-400/20 bg-yellow-400/5 px-3 py-1 font-mono text-xs text-yellow-400"
               >
                 <Tag className="h-3 w-3" />
                 {tag}
@@ -142,7 +142,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
                   <a
                     key={heading.id}
                     href={`#${heading.id}`}
-                    className="text-sm leading-snug text-slate-400 transition-colors hover:text-teal-300"
+                    className="text-sm leading-snug text-zinc-400 transition-colors hover:text-yellow-400"
                     style={{ paddingLeft: `${(heading.level - 1) * 0.75}rem` }}
                   >
                     {heading.text}

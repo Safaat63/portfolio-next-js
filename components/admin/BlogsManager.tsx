@@ -175,7 +175,7 @@ export function BlogsManager({ blogs }: { blogs: Blog[] }) {
                   {blog.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded border border-white/10 bg-white/5 px-1.5 py-0.5 font-mono text-[10px] text-teal-300"
+                      className="rounded border border-yellow-400/20 bg-yellow-400/10 px-1.5 py-0.5 font-mono text-[10px] text-yellow-400"
                     >
                       #{tag}
                     </span>
@@ -310,7 +310,7 @@ export function BlogsManager({ blogs }: { blogs: Blog[] }) {
                 type="checkbox"
                 checked={form.published}
                 onChange={(e) => updateField("published", e.target.checked)}
-                className="h-4 w-4 rounded border-white/20 accent-teal-400"
+                className="h-4 w-4 rounded border-white/20 accent-yellow-400"
               />
               <span className="text-sm text-slate-300">
                 Publish immediately (drafts are hidden from the public site)

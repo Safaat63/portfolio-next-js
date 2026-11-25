@@ -63,12 +63,12 @@ export function MessagesManager({ messages }: { messages: Message[] }) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-slate-400">
-        {messages.length} total &middot; <span className="text-teal-300">{unread} unread</span>
+      <p className="text-sm text-zinc-400">
+        {messages.length} total &middot; <span className="font-semibold text-yellow-400">{unread} unread</span>
       </p>
 
       {messages.length === 0 ? (
-        <GlassCard className="p-10 text-center text-slate-400">
+        <GlassCard className="p-10 text-center text-zinc-400">
           No messages yet. Contact submissions will appear here.
         </GlassCard>
       ) : (
@@ -77,36 +77,36 @@ export function MessagesManager({ messages }: { messages: Message[] }) {
             {messages.map((message) => (
             <GlassCard
               key={message.id}
-              className={cn("flex flex-col gap-4 p-5 sm:flex-row sm:items-start", !message.read && "border-teal-400/40")}
+              className={cn("flex flex-col gap-4 p-5 sm:flex-row sm:items-start", !message.read && "border-yellow-400/40 bg-yellow-400/[0.02]")}
             >
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <h3
                     className={cn(
                       "font-semibold",
-                      message.read ? "text-slate-300" : "text-white"
+                      message.read ? "text-zinc-300" : "text-white"
                     )}
                   >
                     {message.subject}
                   </h3>
                   {!message.read && (
-                    <span className="rounded-full border border-teal-400/40 bg-teal-400/10 px-2 py-0.5 text-[11px] font-medium text-teal-300">
+                    <span className="rounded-full border border-yellow-400/40 bg-yellow-400/10 px-2 py-0.5 font-mono text-[11px] font-bold text-yellow-300">
                       New
                     </span>
                   )}
                 </div>
-                <p className="mt-1 text-sm text-slate-400">
+                <p className="mt-1 text-sm text-zinc-400">
                   {message.name} &middot;{" "}
                   <a
                     href={`mailto:${message.email}`}
-                    className="text-sky-300 hover:underline"
+                    className="text-yellow-400 hover:underline"
                   >
                     {message.email}
                   </a>
-                  <span className="mx-2 text-slate-600">&middot;</span>
-                  <span className="text-slate-500">{formatDate(message.createdAt)}</span>
+                  <span className="mx-2 text-zinc-600">&middot;</span>
+                  <span className="text-zinc-500">{formatDate(message.createdAt)}</span>
                 </p>
-                <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-slate-300">
+                <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-zinc-300">
                   {message.message}
                 </p>
               </div>
@@ -120,8 +120,8 @@ export function MessagesManager({ messages }: { messages: Message[] }) {
                   className={cn(
                     "grid h-9 w-9 place-items-center rounded-xl border transition-all duration-200",
                     message.read
-                      ? "border-white/10 bg-white/5 text-slate-400 hover:border-teal-400/40 hover:text-teal-300"
-                      : "border-teal-400/50 bg-teal-400/15 text-teal-300"
+                      ? "border-white/10 bg-white/5 text-zinc-400 hover:border-yellow-400/40 hover:text-yellow-400"
+                      : "border-yellow-400/50 bg-yellow-400/15 text-yellow-300"
                   )}
                 >
                   {message.read ? <Mail className="h-4 w-4" /> : <MailOpen className="h-4 w-4" />}

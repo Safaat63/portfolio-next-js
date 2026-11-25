@@ -48,7 +48,7 @@ export function BlogFilters({ tags }: { tags: string[] }) {
   return (
     <div className="space-y-4">
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+        <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
         <input
           type="search"
           value={query}
@@ -61,7 +61,7 @@ export function BlogFilters({ tags }: { tags: string[] }) {
           <button
             type="button"
             onClick={clearAll}
-            className="absolute right-3 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-lg border border-white/10 bg-white/5 text-slate-300 transition-colors hover:border-teal-400/50 hover:text-white"
+            className="absolute right-3 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-lg border border-white/10 bg-white/5 text-zinc-300 transition-colors hover:border-yellow-400/50 hover:text-white"
             aria-label="Clear filters"
           >
             <X className="h-4 w-4" />
@@ -74,10 +74,10 @@ export function BlogFilters({ tags }: { tags: string[] }) {
           type="button"
           onClick={() => updateParams({ tag: "" })}
           className={cn(
-            "rounded-full border px-4 py-1.5 text-sm font-medium transition-all duration-200",
+            "rounded-full border px-4 py-1.5 text-xs font-mono transition-all duration-200",
             !activeTag
-              ? "border-teal-400/50 bg-teal-400/15 text-teal-300"
-              : "border-white/10 bg-white/5 text-slate-400 hover:border-teal-400/40 hover:text-white"
+              ? "border-yellow-400 bg-yellow-400 text-zinc-950 font-bold"
+              : "border-white/10 bg-white/5 text-zinc-400 hover:border-yellow-400/40 hover:text-white"
           )}
         >
           All
@@ -88,10 +88,10 @@ export function BlogFilters({ tags }: { tags: string[] }) {
             type="button"
             onClick={() => updateParams({ tag: activeTag === tag ? "" : tag })}
             className={cn(
-              "rounded-full border px-4 py-1.5 text-sm font-medium transition-all duration-200",
+              "rounded-full border px-4 py-1.5 text-xs font-mono transition-all duration-200",
               activeTag === tag
-                ? "border-teal-400/50 bg-teal-400/15 text-teal-300"
-                : "border-white/10 bg-white/5 text-slate-400 hover:border-teal-400/40 hover:text-white"
+                ? "border-yellow-400 bg-yellow-400 text-zinc-950 font-bold"
+                : "border-white/10 bg-white/5 text-zinc-400 hover:border-yellow-400/40 hover:text-white"
             )}
           >
             #{tag}

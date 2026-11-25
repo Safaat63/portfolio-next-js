@@ -13,7 +13,7 @@ export function CloudImage(props: ImageProps) {
     return (
       <div
         className={cn(
-          "absolute inset-0 grid place-items-center bg-gradient-to-br from-teal-500/20 via-sky-500/10 to-violet-500/20",
+          "absolute inset-0 grid place-items-center bg-zinc-900 border border-white/5",
           className
         )}
       >

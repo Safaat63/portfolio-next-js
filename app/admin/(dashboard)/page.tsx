@@ -29,14 +29,14 @@ export default async function AdminDashboardPage() {
       value: projects,
       href: "/admin/projects",
       icon: FolderKanban,
-      accent: "from-teal-400 to-emerald-500",
+      accent: "bg-yellow-400 text-zinc-950",
     },
     {
       label: "Blog Posts",
       value: blogs,
       href: "/admin/blogs",
       icon: FileText,
-      accent: "from-sky-400 to-blue-500",
+      accent: "bg-yellow-400 text-zinc-950",
     },
     {
       label: "Messages",
@@ -44,7 +44,7 @@ export default async function AdminDashboardPage() {
       badge: unreadMessages,
       href: "/admin/messages",
       icon: Inbox,
-      accent: "from-violet-400 to-fuchsia-500",
+      accent: "bg-yellow-400 text-zinc-950",
     },
   ];
 
@@ -56,18 +56,18 @@ export default async function AdminDashboardPage() {
             <GlassCard className="glass-hover p-5">
               <div className="flex items-start justify-between">
                 <span
-                  className={`grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br ${accent} text-slate-950`}
+                  className={`grid h-10 w-10 place-items-center rounded-xl ${accent}`}
                 >
                   <Icon className="h-5 w-5" />
                 </span>
                 {typeof badge === "number" && badge > 0 && (
-                  <span className="rounded-full border border-teal-400/40 bg-teal-400/10 px-2 py-0.5 text-[11px] font-medium text-teal-300">
+                  <span className="rounded-full border border-yellow-400/40 bg-yellow-400/10 px-2 py-0.5 text-[11px] font-mono font-bold text-yellow-300">
                     {badge} unread
                   </span>
                 )}
               </div>
-              <p className="mt-4 font-mono text-3xl font-bold text-white">{value}</p>
-              <p className="mt-1 flex items-center gap-1 text-sm text-slate-400 transition-colors group-hover:text-teal-300">
+              <p className="mt-4 font-mono text-3xl font-extrabold text-white">{value}</p>
+              <p className="mt-1 flex items-center gap-1 text-sm text-zinc-400 transition-colors group-hover:text-yellow-400">
                 {label}
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
               </p>

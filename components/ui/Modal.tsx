@@ -13,12 +13,12 @@ type ModalProps = {
 export function Modal({ title, onClose, children, className }: ModalProps) {
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-center justify-center overflow-y-auto bg-slate-950/70 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[60] flex items-center justify-center overflow-y-auto bg-black/80 p-4 backdrop-blur-md"
       onClick={onClose}
     >
       <div
         className={cn(
-          "glass-strong w-full max-w-2xl border border-white/10 bg-slate-900/90 p-6 sm:p-8",
+          "glass-strong w-full max-w-2xl border border-white/10 bg-zinc-950/95 p-6 sm:p-8",
           className
         )}
         onClick={(e) => e.stopPropagation()}

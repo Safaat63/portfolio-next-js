@@ -20,7 +20,7 @@ const icons = {
 export function Timeline({ milestones }: { milestones: Milestone[] }) {
   return (
     <div className="relative mx-auto max-w-3xl">
-      <div className="absolute left-4 top-0 h-full w-px bg-gradient-to-b from-teal-400/60 via-sky-400/40 to-transparent sm:left-1/2" />
+      <div className="absolute left-4 top-0 h-full w-px bg-white/10 sm:left-1/2" />
 
       {milestones.map((milestone, index) => {
         const Icon = icons[milestone.icon];
@@ -38,7 +38,7 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
             }`}
           >
             <span
-              className={`absolute left-0 top-1 grid h-8 w-8 place-items-center rounded-full border border-teal-400/50 bg-slate-950 text-teal-300 sm:top-0 ${
+              className={`absolute left-0 top-1 grid h-8 w-8 place-items-center rounded-full border border-yellow-400/40 bg-zinc-950 text-yellow-400 sm:top-0 ${
                 leftSide
                   ? "sm:left-auto sm:-right-4"
                   : "sm:-left-4"
@@ -48,9 +48,9 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
             </span>
 
             <div className="glass glass-hover p-5">
-              <span className="font-mono text-xs text-teal-300">{milestone.year}</span>
+              <span className="font-mono text-xs font-bold text-yellow-400">{milestone.year}</span>
               <h3 className="mt-1 font-semibold text-white">{milestone.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-400">
+              <p className="mt-2 text-sm leading-relaxed text-zinc-400">
                 {milestone.description}
               </p>
             </div>
