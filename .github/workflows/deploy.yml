@@ -32,7 +32,9 @@ jobs:
           context: .
           push: true
           tags: ${{ env.IMAGE_NAME }}
+          build-args: |
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
 
       - name: Trigger Dokploy Webhook
         run: |
-          curl -X POST "${{ secrets.DOKPLOY_WEBHOOK_URL }}"
+          curl -f -X POST "${{ secrets.DOKPLOY_WEBHOOK_URL }}"
